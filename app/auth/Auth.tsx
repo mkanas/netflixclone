@@ -3,30 +3,47 @@ import Image from "next/image";
 import React, { useState, useCallback } from "react";
 import Input from "../components/input/Input";
 import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [variant, setVariant] = useState("login");
+  const router = useRouter();
 
   const toggleVariant = useCallback(() => {
     setVariant((currentVariant) =>
       currentVariant === "login" ? "register" : "login"
     );
   }, []);
+  const login = useCallback(async () => {
+    try {
+      await signIn("credentials", {
+        email,
+        password,
+        callbackUrl: "/",
+        redirect: false,
+      });
 
+      router.push("/");
+    } catch (error) {
+      console.log("error login credentials: " + signIn);
+    }
+  }, [email, password, router]);
   const register = useCallback(async () => {
     try {
-      await axios.post("/api/register", {
+      await axios.post("/api", {
         email,
         name,
         password,
       });
+      login();
     } catch (error) {
       console.log(error);
     }
-  }, [email, name, password]);
+  }, [email, name, password, login]);
 
   return (
     <div
@@ -77,7 +94,7 @@ const Auth = () => {
                 onChange={(e: any) => setPassword(e.target.value)}
               />
               <button
-                onClick={register}
+                onClick={variant === "login" ? login : register}
                 className="text-white text-xl bg-red-600 hover:bg-red-700 transition py-3 rounded-md mt-10 font-semibold mb-2"
               >
                 {variant === "login" ? "Login" : "Sign Up"}

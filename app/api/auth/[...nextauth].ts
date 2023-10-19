@@ -1,4 +1,4 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 
@@ -42,8 +42,9 @@ export default NextAuth({
       },
     }),
   ],
+
   pages: {
-    signIn: "/auth",
+    signIn: "/auth/signin",
   },
   debug: process.env.NODE_ENV === "development",
   session: {

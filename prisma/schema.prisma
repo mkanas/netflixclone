@@ -23,7 +23,6 @@ updatedAt DateTime @updatedAt
 favoriteIds String[] @db.ObjectId
 sessions Session[] 
 accounts Account[]
-@@map("user")
 }
 
 model Account{
