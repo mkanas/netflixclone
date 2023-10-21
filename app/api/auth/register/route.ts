@@ -2,12 +2,12 @@ import bcrypt from "bcrypt";
 import { NextResponse, NextRequest } from "next/server";
 import prismadb from "@/lib/prismadb";
 
-export const POST = async (req: NextRequest) => {
-  if (req.method !== "POST") {
+export const POST = async (request: NextRequest) => {
+  if (request.method !== "POST") {
     return new NextResponse("No data", { status: 405 });
   }
   try {
-    const { email, name, password } = await req.json();
+    const { email, name, password } = await request.json();
     if (!email || !name || !password)
       return new NextResponse("email, name or password required", {
         status: 400,

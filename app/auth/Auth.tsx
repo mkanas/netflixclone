@@ -5,6 +5,8 @@ import Input from "../components/input/Input";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
@@ -23,22 +25,22 @@ const Auth = () => {
       await signIn("credentials", {
         email,
         password,
-        callbackUrl: "/",
         redirect: false,
       });
 
       router.push("/");
     } catch (error) {
-      console.log("error login credentials: " + signIn);
+      console.log(error);
     }
   }, [email, password, router]);
   const register = useCallback(async () => {
     try {
-      await axios.post("/api/auth/register", {
+      const data = await axios.post("/api/auth/register", {
         email,
         name,
         password,
       });
+
       login();
     } catch (error) {
       console.log(error);
@@ -99,6 +101,20 @@ const Auth = () => {
               >
                 {variant === "login" ? "Login" : "Sign Up"}
               </button>
+              <div
+                onClick={() => signIn("google", { callbackUrl: "/" })}
+                className="flex flex-row items-center gap-4 mt-8 justify-center"
+              >
+                <div className="flex cursor-pointer hover:opacity-80 transition items-center justify-center rounded-full bg-white ">
+                  <FcGoogle size={30} />
+                </div>
+                <div
+                  onClick={() => signIn("github", { callbackUrl: "/" })}
+                  className="flex cursor-pointer hover:opacity-80 transition items-center justify-center rounded-full bg-white "
+                >
+                  <FaGithub size={30} />
+                </div>
+              </div>
               <p className="text-neutral-500 mt-12">
                 {variant === "login"
                   ? "First time using Netflix?"
