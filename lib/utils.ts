@@ -46,7 +46,7 @@ export const authOptions: NextAuthOptions = {
           credentials.password,
           user.hashedPassword
         );
-        if (isCorrectPassword) {
+        if (!isCorrectPassword) {
           throw new Error("Incorrect password");
         }
         return user;
@@ -61,6 +61,9 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prismadb),
   session: {
     strategy: "jwt",
+  },
+  jwt: {
+    secret: process.env.NEXTAUTH_JWT_SECRET,
   },
   secret: process.env.NEXTAUTH_SECRET,
 };
