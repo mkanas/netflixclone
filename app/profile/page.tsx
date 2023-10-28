@@ -1,11 +1,17 @@
+import { authOptions } from "@/lib/utils";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 import React from "react";
+import Profile from "./profile";
 
-const page = () => {
+const Page = async () => {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect("/auth");
   return (
-    <div>
-      <p className="text-white">Profiles</p>
+    <div className="flex items-center h-full justify-center">
+      <Profile />
     </div>
   );
 };
 
-export default page;
+export default Page;

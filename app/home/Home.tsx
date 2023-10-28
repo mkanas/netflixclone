@@ -1,18 +1,22 @@
 "use client";
 
-import useCurrentUser from "@/hooks/useCurrentUser";
-import { signOut } from "next-auth/react";
+import Navbar from "../components/Navbar";
+import Billboard from "../components/Billboard";
+import MovieList from "../components/MovieList";
+import useMovieList from "hooks/useMoviesList";
+import useFavorites from "hooks/useFavorites";
 
 export default function Home() {
-  const { data: user } = useCurrentUser();
-
+  const { data: movies = [] } = useMovieList();
+  const { data: favorites = [] } = useFavorites();
   return (
     <>
-      <h1 className="text-white">Home Page</h1>
-      <p className="text-white">Logged in as :{user?.name}</p>
-      <button className="h-10 w-full bg-white" onClick={() => signOut()}>
-        logout
-      </button>
+      <Navbar />
+      <Billboard />
+      <div className="pb-40">
+        <MovieList title="Trending Now" data={movies} />
+        <MovieList title="My List" data={favorites} />
+      </div>
     </>
   );
 }

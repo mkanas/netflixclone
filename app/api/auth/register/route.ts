@@ -3,9 +3,6 @@ import { NextResponse, NextRequest } from "next/server";
 import prismadb from "@/lib/prismadb";
 
 export const POST = async (request: NextRequest) => {
-  if (request.method !== "POST") {
-    return new NextResponse("No data", { status: 405 });
-  }
   try {
     const { email, name, password } = await request.json();
     if (!email || !name || !password)
