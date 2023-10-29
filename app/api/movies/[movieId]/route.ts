@@ -6,8 +6,9 @@ export const GET = async (request: NextRequest, response: NextResponse) => {
   try {
     await serverAuth(request);
 
-    const searchParams = request.nextUrl.searchParams;
+    const { searchParams } = new URL(request.url);
     const movieId = searchParams.get("movieId");
+    console.log(movieId);
 
     if (typeof movieId !== "string") {
       throw new Error("Invalid ID");

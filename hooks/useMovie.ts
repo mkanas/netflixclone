@@ -4,7 +4,7 @@ import fetcher from "../lib/fetcher";
 
 const useMovie = (id?: string) => {
   const { data, error, isLoading } = useSWR(
-    id ? `/watch/${id}` : null,
+    id ? `/api/movies/${id}` : null,
     fetcher,
     {
       revalidateOnFocus: false,
