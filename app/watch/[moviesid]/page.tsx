@@ -1,9 +1,17 @@
 import Watch from "./Watch";
 
-const page = () => {
+interface Props {
+  params: {
+    moviesid: string;
+  };
+}
+
+const page = async ({ params }: Props) => {
+  const { moviesid } = params;
+
   return (
     <div>
-      <Watch />
+      <Watch moviesid={moviesid} />
     </div>
   );
 };

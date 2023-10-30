@@ -16,9 +16,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 
   const { movieId } = useInfoModal();
   const { data = {} } = useMovie(movieId);
+  console.log(movieId, data);
 
   useEffect(() => {
-    setIsVisible(!!isVisible);
+    setIsVisible(!!visible);
   }, [visible]);
 
   const handleClose = useCallback(() => {
@@ -50,7 +51,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
             ></video>
             <div
               onClick={() => {
-                handleClose;
+                handleClose();
               }}
               className="cursor-pointer absolute top-3 right-3 h-10 w-10 rounded-full bg-black bg-opacity-70 flex items-center justify-center"
             >
@@ -59,11 +60,11 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8 ">
                 {data?.title}
-                <div className="flex flex-row gap=4 items-center">
-                  <PlayButton movieId={data?.id} />
-                  <FavoriteButton movieId={data?.id} />
-                </div>
               </p>
+              <div className="flex flex-row gap-x`4 items-center">
+                <PlayButton movieId={data?.id} />
+                <FavoriteButton movieId={data?.id} />
+              </div>
             </div>
           </div>
           <div className="px-12 py-8">

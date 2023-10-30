@@ -3,13 +3,14 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import useMovie from "hooks/useMovie";
 import { AiOutlineAlignLeft } from "react-icons/ai";
-import { useSearchParams } from "next/navigation";
 
-export const Watch = () => {
-  const searchParams = useSearchParams();
-  const movieId = searchParams.get("movieId");
+interface Props {
+  moviesid: string;
+}
+
+export const Watch = ({ moviesid }: Props) => {
   const router = useRouter();
-  const { data } = useMovie(movieId as string);
+  const { data } = useMovie(moviesid);
   return (
     <div className="h-screen w-screen bg-black">
       <nav className="fixed w-full p-4 z-10 flex flex-row  items-center gap-8 bg-black bg-opacity-70">
